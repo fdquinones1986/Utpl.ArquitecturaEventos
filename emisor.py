@@ -1,6 +1,9 @@
-import paho.mqtt.client as mqtt
+from paho.mqtt import client as mqtt_client
 import time
 
+import json
+import logging
+import random
 
 BROKER = 'broker.emqx.io'
 PORT = 1883
@@ -12,6 +15,13 @@ PASSWORD = 'public'
 
 def on_publish(client, userdata, mid):
     print("message published")
+
+def on_connect(client, userdata, flags, rc):
+    if rc == 0 and client.is_connected():
+        print("Connected to MQTT Broker!")
+        client.subscribe(TOPIC)
+    else:
+        print(f'Failed to connect, return code {rc}')
 
 def connect_mqtt():
     client = mqtt_client.Client(mqtt_client.CallbackAPIVersion.VERSION1, CLIENT_ID)
@@ -28,7 +38,7 @@ def run():
 
     while True:
         # Mensaje a publicar
-        msg = "Hola desde Python!"
+        msg = "Hola desde Python - Felipe!"
 
         # Publicar el mensaje
         ret = client.publish(TOPIC, msg)
