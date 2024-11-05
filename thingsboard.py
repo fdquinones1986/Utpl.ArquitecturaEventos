@@ -49,7 +49,7 @@ def run():
     # Bucle principal
     while True:
         # Datos a enviar
-        data = {'temperature': obtener_temperatura()}
+        data = {'temperature': 25, 'latitude': latitude, 'longitude': longitude}
         client.publish(topic, str(data))
         print("Sending data:", data)
         time.sleep(5)  # Ajusta el tiempo de espera según tus necesidades
